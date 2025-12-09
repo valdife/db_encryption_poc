@@ -1,0 +1,82 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django/migrations
+**/migrations/
+!**/migrations/__init__.py
+
+# Django local settings
+local_settings.py
+
+# SQLite database files
+*.sqlite3
+
+# PostgreSQL database dump files
+*.dump
+
+# Env files
+.env
+.env.*
+
+# Django static/media/output
+staticfiles/
+static/
+media/
+public/static/
+public/media/
+
+# Unit test / coverage reports
+.coverage
+htmlcov/
+.tox/
+.nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# VS Code/IDE/Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Python virtualenv
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+
+# Sentry
+.sentrycli/
+
+# Pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Wheel package
+*.whl
+
+# Backup files
+*~
+
+uv.lock
+
+*.pyc
