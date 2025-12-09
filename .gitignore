@@ -3,10 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Django/migrations
-**/migrations/
-!**/migrations/__init__.py
-
 # Django local settings
 local_settings.py
 
