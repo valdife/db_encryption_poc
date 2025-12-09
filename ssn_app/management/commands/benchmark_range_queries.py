@@ -236,31 +236,27 @@ class Command(BaseCommand):
             # We use .only() to minimize data transfer, but still need all rows
             all_records = list(
                 ApplicantEncrypted.objects
-                .only("id", "name", "income_ciphertext")
+                .values_list("id", "name", "income_ciphertext", named=True)
                 .iterator(chunk_size=2000)
             )
             records_scanned = len(all_records)
 
             # Step 2: Decrypt ALL income values
-            decrypted = []
-            for record in all_records:
-                income_str = fernet.decrypt(record.income_ciphertext.encode()).decode()
-                income = Decimal(income_str)
-                decrypted.append({
-                    "id": record.id,
-                    "name": record.name,
-                    "income": income,
-                })
+            from heapq import nlargest
 
-            # Step 3: Filter (WHERE income > threshold) - in Python
-            filtered = [r for r in decrypted if r["income"] > threshold]
-            records_filtered = len(filtered)
+            candidates = []
+            for record in all_records:
+                income = Decimal(fernet.decrypt(record.income_ciphertext.encode()).decode())
+                if income > threshold:
+                    # Only keep what passes filter
+                    candidates.append({"id": record.id, "name": record.name, "income": income})
+            records_filtered = len(candidates)
 
             # Step 4: Sort (ORDER BY income DESC) - in Python
-            sorted_results = sorted(filtered, key=lambda x: x["income"], reverse=True)
+            from heapq import nlargest
+            top_results = nlargest(top_n, candidates, key=lambda x: x["income"])
 
             # Step 5: Take top N (LIMIT) - in Python
-            top_results = sorted_results[:top_n]
             records_returned = len(top_results)
 
             elapsed_ms = (perf_counter() - start) * 1000
