@@ -1,0 +1,17 @@
+[project]
+name = "db-encryption-poc"
+version = "0.1.0"
+description = "Proof of Concept for column-level SSN encryption in Django"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.1",
+    "psycopg[binary]>=3.2",
+    "cryptography>=43.0",
+    "faker>=30.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "django-extensions>=3.2",
+]
